@@ -3,6 +3,7 @@
     let vm = new Vue({
         el: '#app',
         data: {
+            increment: 4,
             todos: [
                 {
                     id: '1',
@@ -21,7 +22,21 @@
                     isDone: false,
                 }
             ],
+            newTodoTitle: '',
+            newTodoCategory: '',
         },
+        methods: {
+            addTodo: function () {
+                this.todos.push({
+                    id: this.increment++,
+                    title: this.newTodoTitle,
+                    categoryId: this.newTodoCategory,
+                    isDone: false,
+                });
+                this.newTodoTitle = '';
+                this.newTodoCategory = '';
+            }
+        }
     });
 
 })();
