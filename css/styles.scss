@@ -7,7 +7,7 @@ height: 100%;
 
 /* Wrapper for page content to push down footer */
 
-#wrap {
+#app {
 min-height: 100%;
 height: auto !important;
 height: 100%;
@@ -52,6 +52,11 @@ height: 60px;
 
 h2 {
     border-bottom: solid 3px #ddd;
+}
+
+span.done {
+    text-decoration: line-through;
+    color: #bbb;
 }
 
 /* Lastly, apply responsive CSS fixes as necessary */
