@@ -22,21 +22,40 @@
                     isDone: false,
                 }
             ],
+            errors: {},
             categories: ['家事', '買い物', '娯楽'],
-            newTodoTitle: '',
+            newTodoTitle: null,
             newTodoCategory: '未選択',
         },
         methods: {
             addTodo: function () {
-                this.todos.push({
-                    id: this.increment++,
-                    title: this.newTodoTitle,
-                    categoryId: this.newTodoCategory,
-                    isDone: false,
-                });
+                if (!this.addTodoRequestValid())
+                    this.todos.push({
+                        id: this.increment++,
+                        title: this.newTodoTitle,
+                        categoryId: this.newTodoCategory,
+                        isDone: false,
+                    });
                 this.newTodoTitle = '';
-                this.newTodoCategory = '';
-            }
+                this.newTodoCategory = '未選択';
+            },
+            addTodoRequestValid: function () {
+                if (this.newTodoTitle && this.categories.includes(this.newTodoCategory)) {
+                    return true;
+                }
+
+                this.errors = [];
+
+                if (!this.newTodoTitle) {
+                    this.errors.title = 'タイトルの入力は必須です。';
+                }
+
+                if (!this.categories.includes(this.newTodoCategory)) {
+                    this.errors.category = 'カテゴリを選択してください。';
+                }
+
+                console.log(this.errors);
+            },
         }
     });
 
