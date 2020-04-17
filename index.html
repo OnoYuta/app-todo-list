@@ -21,10 +21,13 @@
                 <div class="collapse navbar-collapse" id="mainNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link">ToDo一覧</a>
+                            <a href="#todo-list" class="nav-link">ToDo一覧</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link">カテゴリ</a>
+                            <a href="#create-todo" class="nav-link">新規作成</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="modal" data-target="#modal-create-category">カテゴリ</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
@@ -35,7 +38,7 @@
         </nav>
         <div class="container">
             <div class="py-3">
-                <h2 class="pb-2 mb-4"><i class="fas fa-list"></i> ToDo一覧</h2>
+                <h2 class="pb-2 mb-4" id="todo-list"><i class="fas fa-list"></i> ToDo一覧</h2>
                 <form action="">
                     <div class="form-row align-items-end">
                         <div class="form-group col-md-4">
@@ -93,9 +96,11 @@
             </div>
             <hr>
             <div class="py-3">
-                <h2 class="pb-2 mb-4"><i class="fas fa-edit pb-2"></i> 新規作成</h2>
-                <div class="alert alert-dismissible" role="alert" v-show="!createAlert.isHidden" :class="classObject">
-                    <button type="button" class="close" @click="hideCreateAlert"><span>&times;</span></button>
+                <h2 class="pb-2 mb-4" id="create-todo"><i class="fas fa-edit pb-2"></i> 新規作成</h2>
+                <div class="alert alert-dismissible" role="alert" v-show="!createAlert.isHidden"
+                    :class="createTodoClassObject">
+                    <button type="button" class="close"
+                        @click="createAlert.hideCreateTodoAlert"><span>&times;</span></button>
                     <strong>{{ createAlert.title }}</strong>
                     <span v-if="!createAlert.errors.length"> {{ createAlert.message }}</span>
                     <ul v-else>
@@ -110,7 +115,10 @@
                                 placeholder="例：犬の散歩">
                         </div>
                         <div class="form-group col-md-4">
-                            <label class="font-weight-bold d-none d-md-block" for="todoCategory">カテゴリ</label>
+                            <label class="font-weight-bold d-none d-md-block" for="todoCategory">カテゴリ
+                                <a class="text-info" data-toggle="modal" data-target="#modal-create-category"><i
+                                        class="fas fa-plus-circle"></i></a>
+                            </label>
                             <select class="form-control" type="text" id="todoCategory" v-model="newTodoCategory">
                                 <option selected>未選択</option>
                                 <option v-for="category in categories">{{ category }}</option>
@@ -121,6 +129,33 @@
                         </div>
                     </div>
                 </form>
+                <div class="modal fade" id="modal-create-category">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form @submit.prevent="addCategory" @keydown.enter.prevent="addCategory">
+                                <div class="modal-header">
+                                    <h3 class=“modal-title”>カテゴリ追加</h3>
+                                    <a class="btn close" @click="createCategory.hideCreateCategoryModal">
+                                        <span>&times;</span>
+                                    </a>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="alert alert-dismissible" role="alert" v-show="!createCategory.isHidden"
+                                        :class="createCategoryClassObject">
+                                        <strong>{{ createCategory.title }}</strong>
+                                        <span v-if="!createCategory.errors.length"> {{ createCategory.message }}</span>
+                                        <span v-else> {{ createCategory.errors[0] }}</span>
+                                    </div>
+                                    <input class="form-control" type="text" v-model="createCategory.newCategoryName"
+                                        placeholder="任意のカテゴリ名を入力">
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-info" type="submit">追加</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="push"></div>

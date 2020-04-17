@@ -27,6 +27,26 @@
                 isHidden: true,
                 errors: [],
                 message: '新しいToDoが追加されました。',
+                hideCreateTodoAlert: function () {
+                    vm.createAlert.isHidden = true;
+                },
+            },
+            createCategory: {
+                newCategoryName: null,
+                title: null,
+                isHidden: true,
+                errors: [],
+                message: '新しいカテゴリが追加されました。',
+                classObject: function () {
+                    return {
+                        'alert-info': vm.createCategory.errors.length === 0,
+                        'alert-danger': vm.createCategory.errors.length !== 0,
+                    }
+                },
+                hideCreateCategoryModal: function () {
+                    $('#modal-create-category').modal('hide');
+                    vm.createCategory.isHidden = true;
+                },
             },
             categories: ['家事', '買い物', '娯楽'],
             newTodoTitle: null,
@@ -45,23 +65,11 @@
                     isDone: false,
                 });
 
-                this.createAlert.title = '成功!';
-                this.createAlert.isHidden = false;
-
-
                 this.newTodoTitle = null;
                 this.newTodoCategory = '未選択';
             },
             addTodoRequestValid: function () {
                 this.createAlert.isHidden = true;
-                this.createAlert.title = null;
-                this.createAlert.errors = [];
-                this.createAlert.errors = [];
-
-                if (this.newTodoTitle && this.categories.includes(this.newTodoCategory)) {
-                    return true;
-                }
-
                 this.createAlert.errors = [];
 
                 if (!this.newTodoTitle) {
@@ -73,20 +81,64 @@
                 }
 
                 this.createAlert.isHidden = false;
-                this.createAlert.title = '失敗!';
 
+                if (this.createAlert.errors.length) {
+                    this.createAlert.title = '失敗!';
+                    return false;
+                }
+
+                this.createAlert.title = '成功!';
+                return true;
             },
-            hideCreateAlert: function () {
-                this.createAlert.isHidden = true;
+            addCategory: function (e) {
+                // 日本語入力中のEnterキー操作は無効にする
+                if (e.keyCode !== 13) return;
+
+                if (!this.addCategoryRequestValid()) {
+                    return;
+                }
+
+                this.categories.push(this.createCategory.newCategoryName);
+
+                this.createCategory.title = '成功!';
+                this.createCategory.isHidden = false;
+
+                this.createCategory.newCategoryName = null;
+            },
+            addCategoryRequestValid: function () {
+                this.createCategory.isHidden = true;
+                this.createCategory.errors = [];
+
+                if (!this.createCategory.newCategoryName) {
+                    this.createCategory.errors.push('カテゴリ名を入力してください。');
+                } else if (this.categories.includes(this.createCategory.newCategoryName)) {
+                    this.createCategory.errors.push('そのカテゴリは既に存在します。');
+                }
+
+                this.createCategory.isHidden = false;
+
+                if (this.createCategory.errors.length) {
+                    this.createCategory.title = '失敗!';
+                    return false;
+                }
+
+                this.createCategory.title = '成功!';
+                return true;
             }
         },
         computed: {
-            classObject: function () {
+            createTodoClassObject: function () {
                 return {
                     'alert-info': this.createAlert.errors.length === 0,
                     'alert-danger': this.createAlert.errors.length !== 0,
                 }
-            }
+            },
+            createCategoryClassObject: function () {
+                return {
+                    'alert-info': this.createCategory.errors.length === 0,
+                    'alert-danger': this.createCategory.errors.length !== 0,
+                }
+            },
         },
         watch: {
             todos: {
