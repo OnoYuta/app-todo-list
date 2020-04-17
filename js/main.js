@@ -92,7 +92,7 @@
             },
             addCategory: function (e) {
                 // 日本語入力中のEnterキー操作は無効にする
-                if (e.keyCode === 13) return;
+                if (e.keyCode !== 13) return;
 
                 if (!this.addCategoryRequestValid()) {
                     return;
