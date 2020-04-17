@@ -175,6 +175,18 @@
                     'alert-danger': this.createCategory.errors.length !== 0,
                 }
             },
+            isCreateTodoActive: function () {
+                let valid = this.addTodoRequestValid();
+                this.createAlert.isHidden = true;
+                this.createAlert.errors = [];
+                return valid;
+            },
+            isCreateCategoryActive: function () {
+                let valid = this.addCategoryRequestValid();
+                this.createCategory.isHidden = true;
+                this.createCategory.errors = [];
+                return valid;
+            },
         },
         watch: {
             todos: {

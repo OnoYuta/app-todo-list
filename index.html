@@ -65,7 +65,8 @@
                             <th scope="col">ID</th>
                             <th scope="col">タイトル</th>
                             <th scope="col">カテゴリ</th>
-                            <th scope="col">完了チェック</th>
+                            <th scope="col" class="text-center">実施状況</th>
+                            <th scope="col" class="text-center">削除</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,7 +74,16 @@
                             <th scope="row">{{ todo.id }}</th>
                             <td><span :class="{done: todo.isDone}">{{ todo.title }}</span></td>
                             <td>{{ todo.categoryId }}</td>
-                            <td><input type="checkbox" v-model="todo.isDone"></td>
+                            <td class="text-center">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" :id="'switch-isDone-' + todo.id"
+                                        v-model="todo.isDone">
+                                    <label class="custom-control-label" :for="'switch-isDone-' + todo.id"></label>
+                                </div>
+                            </td>
+                            <td class="text-center"><button type="button" class="btn btn-dark btn-sm"
+                                    :disabled="!todo.isDone">削除</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -127,7 +137,8 @@
                             </select>
                         </div>
                         <div class="form-group col-md-2">
-                            <button class="form-control btn btn-info" type="submit">作成</button>
+                            <button class="form-control btn btn-info" type="submit"
+                                :disabled="!isCreateTodoActive">作成</button>
                         </div>
                     </div>
                 </form>
@@ -152,7 +163,8 @@
                                         placeholder="任意のカテゴリ名を入力">
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-info" type="submit">追加</button>
+                                    <button class="btn btn-info" type="submit"
+                                        :disabled="!isCreateCategoryActive">追加</button>
                                 </div>
                             </form>
                         </div>

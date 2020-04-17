@@ -36,6 +36,12 @@ height: 60px;
     border-color: #ddd;
 }
 
+.custom-control-input:checked ~ .custom-control-label::before {
+    color: #fff;
+    border-color: #17a2b8;
+    background-color: #17a2b8;
+}
+
 h2 {
     border-bottom: solid 3px #ddd;
 }
