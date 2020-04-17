@@ -151,6 +151,11 @@
                 let to = Math.min(this.todos.length, from + 10);
                 this.todosInList = this.todos.slice(from, to);
             },
+            deleteTodo: function (id) {
+                this.todos = this.todos.filter(function (todo) {
+                    return todo.id !== Number(this);
+                }, id);
+            },
             getParam: function (name) {
                 let url = window.location.href;
                 name = name.replace(/[\[\]]/g, "\\$&");

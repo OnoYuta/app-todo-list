@@ -82,7 +82,7 @@
                                 </div>
                             </td>
                             <td class="text-center"><button type="button" class="btn btn-dark btn-sm"
-                                    :disabled="!todo.isDone">削除</button>
+                                    @click="deleteTodo(todo.id)" :disabled="!todo.isDone">削除</button>
                             </td>
                         </tr>
                     </tbody>
