@@ -22,21 +22,74 @@
                     isDone: false,
                 }
             ],
-            newTodoTitle: '',
-            newTodoCategory: '',
+            createAlert: {
+                title: null,
+                isHidden: true,
+                errors: [],
+                message: '新しいToDoが追加されました。',
+            },
+            categories: ['家事', '買い物', '娯楽'],
+            newTodoTitle: null,
+            newTodoCategory: '未選択',
         },
         methods: {
             addTodo: function () {
+                if (!this.addTodoRequestValid()) {
+                    return;
+                }
+
                 this.todos.push({
                     id: this.increment++,
                     title: this.newTodoTitle,
                     categoryId: this.newTodoCategory,
                     isDone: false,
                 });
-                this.newTodoTitle = '';
-                this.newTodoCategory = '';
+
+                this.createAlert.title = '成功!';
+                this.createAlert.isHidden = false;
+
+
+                this.newTodoTitle = null;
+                this.newTodoCategory = '未選択';
+            },
+            addTodoRequestValid: function () {
+                this.createAlert.isHidden = true;
+                this.createAlert.title = null;
+                this.createAlert.errors = [];
+                this.createAlert.errors = [];
+
+                if (this.newTodoTitle && this.categories.includes(this.newTodoCategory)) {
+                    return true;
+                }
+
+                this.createAlert.errors = [];
+
+                if (!this.newTodoTitle) {
+                    this.createAlert.errors.push('タイトルの入力は必須です。');
+                }
+
+                if (!this.categories.includes(this.newTodoCategory)) {
+                    this.createAlert.errors.push('カテゴリを選択してください。');
+                }
+
+                this.createAlert.isHidden = false;
+                this.createAlert.title = '失敗!';
+
+            },
+            hideCreateAlert: function () {
+                this.createAlert.isHidden = true;
             }
-        }
+        },
+        computed: {
+            classObject: function () {
+                return {
+                    'alert-info': this.createAlert.errors.length === 0,
+                    'alert-danger': this.createAlert.errors.length !== 0,
+                }
+            }
+        },
     });
+
+
 
 })();

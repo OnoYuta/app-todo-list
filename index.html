@@ -50,9 +50,7 @@
                         <div class="form-group offset-md-4 col-md-4">
                             <select id="inputCategory" class="form-control">
                                 <option selected>すべてのカテゴリ</option>
-                                <option>家事</option>
-                                <option>買い物</option>
-                                <option>娯楽</option>
+                                <option v-for="category in categories">{{ category }}</option>
                             </select>
                         </div>
                     </div>
@@ -96,6 +94,14 @@
             <hr>
             <div class="py-3">
                 <h2 class="pb-2 mb-4"><i class="fas fa-edit pb-2"></i> 新規作成</h2>
+                <div class="alert alert-dismissible" role="alert" v-show="!createAlert.isHidden" :class="classObject">
+                    <button type="button" class="close" @click="hideCreateAlert"><span>&times;</span></button>
+                    <strong>{{ createAlert.title }}</strong>
+                    <span v-if="!createAlert.errors.length"> {{ createAlert.message }}</span>
+                    <ul v-else>
+                        <li v-for="error in createAlert.errors">{{ error }}</li>
+                    </ul>
+                </div>
                 <form @submit.prevent="addTodo">
                     <div class="form-row align-items-end">
                         <div class="form-group col-md-6">
@@ -105,10 +111,8 @@
                         <div class="form-group col-md-4">
                             <label class="font-weight-bold d-none d-md-block" for="todoCategory">カテゴリ</label>
                             <select class="form-control" type="text" id="todoCategory" v-model="newTodoCategory">
-                                <option selected>すべてのカテゴリ</option>
-                                <option>家事</option>
-                                <option>買い物</option>
-                                <option>娯楽</option>
+                                <option selected>未選択</option>
+                                <option v-for="category in categories">{{ category }}</option>
                             </select>
                         </div>
                         <div class="form-group col-md-2">
