@@ -3,7 +3,10 @@
     let vm = new Vue({
         el: '#app',
         data: {
+            currentPage: 1,
+            lastPage: 2,
             increment: 4,
+            todosInList: [],
             todos: [
                 {
                     id: '1',
@@ -124,6 +127,16 @@
 
                 this.createCategory.title = '成功!';
                 return true;
+            },
+            getParam: function (name) {
+                let url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
             }
         },
         computed: {
@@ -144,6 +157,12 @@
             todos: {
                 handler: function () {
                     localStorage.setItem('todos', JSON.stringify(this.todos));
+                    this.lastPage = Math.floor(this.todos.length / 10) + 1;
+                    this.currentPage = this.getParam('page') ? this.getParam('page') : 1;
+                    let from = (this.currentPage - 1) * 10;
+                    let to = Math.min(this.todos.length, from + 10);
+                    this.todosInList = this.todos.slice(from, to);
+                    console.log(this.todosInList);
                 },
                 deep: true,
             },
