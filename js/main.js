@@ -59,7 +59,7 @@
                 }
 
                 this.todos.push({
-                    id: this.increment++,
+                    id: ++this.increment,
                     title: this.newTodoTitle,
                     categoryId: this.newTodoCategory,
                     isDone: false,
@@ -139,6 +139,38 @@
                     'alert-danger': this.createCategory.errors.length !== 0,
                 }
             },
+        },
+        watch: {
+            todos: {
+                handler: function () {
+                    localStorage.setItem('todos', JSON.stringify(this.todos));
+                },
+                deep: true,
+            },
+            categories: {
+                handler: function () {
+                    localStorage.setItem('categories', JSON.stringify(this.categories));
+                },
+                deep: true,
+            }
+        },
+        mounted: function () {
+            if (localStorage.getItem('todos')) {
+                this.todos = JSON.parse(localStorage.getItem('todos'));
+
+                // ToDoのindexの最大値をインクリメントにセットする
+                var index = this.todos.map(function (todo) {
+                    return todo.id;
+                });
+
+                this.increment = Math.max.apply(null, index);
+            } else {
+                this.increment = this.todos.length;
+            }
+
+            if (localStorage.getItem('categories')) {
+                this.categories = JSON.parse(localStorage.getItem('categories'));
+            }
         },
     });
 
