@@ -11,8 +11,7 @@
 </head>
 
 <body>
-    <div id="wrap">
-        <!-- nav-bar -->
+    <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container">
                 <h1><a href="#" class="navbar-brand"><i class="fas fa-braille"></i> ToDo管理システム</a></h1>
@@ -35,7 +34,6 @@
             </div>
         </nav>
         <div class="container">
-
             <div class="py-3">
                 <h2 class="pb-2 mb-4"><i class="fas fa-list"></i> ToDo一覧</h2>
                 <form action="">
@@ -69,23 +67,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>ゴミ捨て</td>
-                            <td>家事</td>
-                            <td><input type="checkbox"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>充電コードを買う</td>
-                            <td>買い物</td>
-                            <td><input type="checkbox"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td><del>子供と公園に行く</del></td>
-                            <td>娯楽</td>
-                            <td><input type="checkbox"></td>
+                        <tr v-for="todo in todos">
+                            <th scope="row">{{ todo.id }}</th>
+                            <td><span :class="{done: todo.isDone}">{{ todo.title }}</span></td>
+                            <td>{{ todo.categoryId }}</td>
+                            <td><input type="checkbox" v-model="todo.isDone"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -110,15 +96,15 @@
             <hr>
             <div class="py-3">
                 <h2 class="pb-2 mb-4"><i class="fas fa-edit pb-2"></i> 新規作成</h2>
-                <form action="">
+                <form @submit.prevent="addTodo">
                     <div class="form-row align-items-end">
                         <div class="form-group col-md-6">
                             <label class="font-weight-bold d-none d-md-block" for="todoTitle">タイトル</label>
-                            <input class="form-control" type="text" id="todoTitle">
+                            <input class="form-control" type="text" id="todoTitle" v-model="newTodoTitle">
                         </div>
                         <div class="form-group col-md-4">
                             <label class="font-weight-bold d-none d-md-block" for="todoCategory">カテゴリ</label>
-                            <select class="form-control" type="text" id="todoCategory">
+                            <select class="form-control" type="text" id="todoCategory" v-model="newTodoCategory">
                                 <option selected>すべてのカテゴリ</option>
                                 <option>家事</option>
                                 <option>買い物</option>
@@ -132,7 +118,6 @@
                 </form>
             </div>
         </div>
-
         <div id="push"></div>
     </div>
 
