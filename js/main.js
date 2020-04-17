@@ -2,8 +2,27 @@
 
     let vm = new Vue({
         el: '#app',
+        increment: 4,
         data: {
-            increment: 4,
+            todosInList: [],
+            filter: {
+                currentPage: null,
+                lastPage: null,
+                updateCurrentPage: function (index) {
+                    $('#input-page').val(index);
+                    $('#filter-todos-form').submit();
+                },
+                previosPage: function () {
+                    if (vm.filter.currentPage <= 1) return;
+                    $('#input-page').val(vm.filter.currentPage - 1);
+                    $('#filter-todos-form').submit();
+                },
+                nextPage: function () {
+                    if (vm.filter.currentPage >= vm.filter.lastPage) return;
+                    $('#input-page').val(vm.filter.currentPage + 1);
+                    $('#filter-todos-form').submit();
+                },
+            },
             todos: [
                 {
                     id: '1',
@@ -124,6 +143,23 @@
 
                 this.createCategory.title = '成功!';
                 return true;
+            },
+            updateTodoList: function () {
+                this.filter.lastPage = Math.floor((this.todos.length - 1) / 10) + 1;
+                this.filter.currentPage = this.getParam('page') ? Number(this.getParam('page')) : 1;
+                let from = (this.filter.currentPage - 1) * 10;
+                let to = Math.min(this.todos.length, from + 10);
+                this.todosInList = this.todos.slice(from, to);
+            },
+            getParam: function (name) {
+                let url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
             }
         },
         computed: {
@@ -144,6 +180,7 @@
             todos: {
                 handler: function () {
                     localStorage.setItem('todos', JSON.stringify(this.todos));
+                    this.updateTodoList();
                 },
                 deep: true,
             },
@@ -171,6 +208,8 @@
             if (localStorage.getItem('categories')) {
                 this.categories = JSON.parse(localStorage.getItem('categories'));
             }
+
+            this.filter.currentPage = this.getParam('page') ? Number(this.getParam('page')) : 1;
         },
     });
 

@@ -21,33 +21,19 @@ margin: 0 auto -60px;
 height: 60px;
 }
 
-.pagination>li>a
+.pagination>li>a:not([href]):not([tabindex])
 {
     background-color: white;
     color: #6c757d;
 }
 
-.pagination>li>a:focus,
-.pagination>li>a:hover,
-.pagination>li>span:focus,
-.pagination>li>span:hover
+.pagination>li>a:not([href]):not([tabindex]):focus,
+.pagination>li>a:not([href]):not([tabindex]):hover,
+.pagination>li>a:not([href]):not([tabindex]).active
 {
     color: #eee;
     background-color: #17a2b8;
     border-color: #ddd;
-}
-
-.pagination>.active>a
-{
-    background-color: #17a2b8;
-    border: solid 1px #17a2b8;
-}
-
-.pagination>.active>a:hover
-{
-    color: white;
-    background-color: white;
-    border: solid 1px #17a2b8;
 }
 
 h2 {
