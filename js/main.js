@@ -2,11 +2,13 @@
 
     let vm = new Vue({
         el: '#app',
+        increment: 4,
         data: {
-            currentPage: 1,
-            lastPage: 2,
-            increment: 4,
             todosInList: [],
+            filter: {
+                currentPage: null,
+                lastPage: 2,
+            },
             todos: [
                 {
                     id: '1',
@@ -128,6 +130,13 @@
                 this.createCategory.title = '成功!';
                 return true;
             },
+            updateTodoList: function () {
+                this.filter.lastPage = Math.floor((this.todos.length - 1) / 10) + 1;
+                this.filter.currentPage = this.getParam('page') ? this.getParam('page') : 1;
+                let from = (this.filter.currentPage - 1) * 10;
+                let to = Math.min(this.todos.length, from + 10);
+                this.todosInList = this.todos.slice(from, to);
+            },
             getParam: function (name) {
                 let url = window.location.href;
                 name = name.replace(/[\[\]]/g, "\\$&");
@@ -157,12 +166,7 @@
             todos: {
                 handler: function () {
                     localStorage.setItem('todos', JSON.stringify(this.todos));
-                    this.lastPage = Math.floor(this.todos.length / 10) + 1;
-                    this.currentPage = this.getParam('page') ? this.getParam('page') : 1;
-                    let from = (this.currentPage - 1) * 10;
-                    let to = Math.min(this.todos.length, from + 10);
-                    this.todosInList = this.todos.slice(from, to);
-                    console.log(this.todosInList);
+                    this.updateTodoList();
                 },
                 deep: true,
             },
@@ -190,6 +194,8 @@
             if (localStorage.getItem('categories')) {
                 this.categories = JSON.parse(localStorage.getItem('categories'));
             }
+
+            this.filter.currentPage = this.getParam('page') ? this.getParam('page') : 1;
         },
     });
 
