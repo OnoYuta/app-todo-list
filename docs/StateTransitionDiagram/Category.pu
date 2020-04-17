@@ -1,0 +1,6 @@
+@startuml
+
+[*] --> 有効 : カテゴリ追加
+有効 : Activated
+
+@enduml
