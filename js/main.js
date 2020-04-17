@@ -7,7 +7,21 @@
             todosInList: [],
             filter: {
                 currentPage: null,
-                lastPage: 2,
+                lastPage: null,
+                updateCurrentPage: function (index) {
+                    $('#input-page').val(index);
+                    $('#filter-todos-form').submit();
+                },
+                previosPage: function () {
+                    if (vm.filter.currentPage <= 1) return;
+                    $('#input-page').val(vm.filter.currentPage - 1);
+                    $('#filter-todos-form').submit();
+                },
+                nextPage: function () {
+                    if (vm.filter.currentPage >= vm.filter.lastPage) return;
+                    $('#input-page').val(vm.filter.currentPage + 1);
+                    $('#filter-todos-form').submit();
+                },
             },
             todos: [
                 {
@@ -132,7 +146,7 @@
             },
             updateTodoList: function () {
                 this.filter.lastPage = Math.floor((this.todos.length - 1) / 10) + 1;
-                this.filter.currentPage = this.getParam('page') ? this.getParam('page') : 1;
+                this.filter.currentPage = this.getParam('page') ? Number(this.getParam('page')) : 1;
                 let from = (this.filter.currentPage - 1) * 10;
                 let to = Math.min(this.todos.length, from + 10);
                 this.todosInList = this.todos.slice(from, to);
@@ -195,7 +209,7 @@
                 this.categories = JSON.parse(localStorage.getItem('categories'));
             }
 
-            this.filter.currentPage = this.getParam('page') ? this.getParam('page') : 1;
+            this.filter.currentPage = this.getParam('page') ? Number(this.getParam('page')) : 1;
         },
     });
 

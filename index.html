@@ -39,15 +39,15 @@
         <div class="container">
             <div class="py-3">
                 <h2 class="pb-2 mb-4" id="todo-list"><i class="fas fa-list"></i> ToDo一覧</h2>
-                <form action="" method="GET">
-                    <input type="hidden" name="page" v-model="filter.currentPage">
+                <form action="" method="GET" id="filter-todos-form">
+                    <input id="input-page" type="hidden" name="page" v-model="filter.currentPage">
                     <div class="form-row align-items-end">
                         <div class="form-group col-md-4">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <button class="btn btn-info" type="submit"><i class="fas fa-search"></i></button>
                                 </div>
-                                <input type="text" id="inputSearch" class="form-control" placeholder="タイトルに含まれる文字"
+                                <input type="text" id="inputSearch" class="form-control" placeholder="タイトルに含む文字"
                                     aria-describedby="validationTooltipUsernamePrepend" required>
                             </div>
                         </div>
@@ -80,15 +80,16 @@
                 <nav>
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
-                            <a class="page-link" aria-label="Previous">
+                            <a @click="filter.previosPage" class="page-link" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                         <li class="page-item" v-for="i of filter.lastPage" :key="i">
-                            <a class="page-link" :class="{active: i === Number(filter.currentPage)}">{{ i }}</a>
+                            <a @click="filter.updateCurrentPage(i)" class="page-link"
+                                :class="{active: i === Number(filter.currentPage)}">{{ i }}</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" aria-label="Next">
+                            <a @click="filter.nextPage" class="page-link" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
