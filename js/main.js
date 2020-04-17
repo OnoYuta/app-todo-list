@@ -22,8 +22,9 @@
                     isDone: false,
                 }
             ],
+            categories: ['家事', '買い物', '娯楽'],
             newTodoTitle: '',
-            newTodoCategory: '',
+            newTodoCategory: '未選択',
         },
         methods: {
             addTodo: function () {

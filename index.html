@@ -50,9 +50,7 @@
                         <div class="form-group offset-md-4 col-md-4">
                             <select id="inputCategory" class="form-control">
                                 <option selected>すべてのカテゴリ</option>
-                                <option>家事</option>
-                                <option>買い物</option>
-                                <option>娯楽</option>
+                                <option v-for="category in categories">{{ category }}</option>
                             </select>
                         </div>
                     </div>
@@ -105,10 +103,8 @@
                         <div class="form-group col-md-4">
                             <label class="font-weight-bold d-none d-md-block" for="todoCategory">カテゴリ</label>
                             <select class="form-control" type="text" id="todoCategory" v-model="newTodoCategory">
-                                <option selected>すべてのカテゴリ</option>
-                                <option>家事</option>
-                                <option>買い物</option>
-                                <option>娯楽</option>
+                                <option selected>未選択</option>
+                                <option v-for="category in categories">{{ category }}</option>
                             </select>
                         </div>
                         <div class="form-group col-md-2">
