@@ -165,6 +165,11 @@
                 if (!results[2]) return '';
 
                 return decodeURIComponent(results[2].replace(/\+/g, " "));
+            },
+            purge: function () {
+                this.todos = this.todos.filter(function (todo) {
+                    return !todo.isDone;
+                });
             }
         },
         computed: {

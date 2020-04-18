@@ -85,7 +85,7 @@
                                     @click="deleteTodo(todo.id)" :disabled="!todo.isDone">削除</button>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="table-light" style="border-top: solid 2px #ddd;">
                             <td colspan="4">
                                 <nav>
                                     <ul class="pagination my-0 py-0">
@@ -126,7 +126,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">キャンセル</button>
-                                        <button class="btn btn-danger" data-dismiss="modal">実行</button>
+                                        <button class="btn btn-danger" @click="purge" data-dismiss="modal">実行</button>
                                     </div>
                                 </div>
                             </div>
