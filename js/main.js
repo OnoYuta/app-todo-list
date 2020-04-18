@@ -185,6 +185,11 @@
                     'alert-danger': this.createCategory.errors.length !== 0,
                 }
             },
+            purgeClassObject: function(){
+                return {
+                    'disabled': !this.doneTodosInList.length,
+                }
+            },
             isCreateTodoActive: function () {
                 let valid = this.addTodoRequestValid();
                 this.createAlert.isHidden = true;
@@ -197,6 +202,11 @@
                 this.createCategory.errors = [];
                 return valid;
             },
+            doneTodosInList: function () {
+                return this.todosInList.filter(function (todo) {
+                    return todo.isDone;
+                });
+            }
         },
         watch: {
             todos: {
