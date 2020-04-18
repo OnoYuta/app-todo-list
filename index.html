@@ -69,81 +69,84 @@
                         </div>
                     </div>
                 </form>
-                <table class="table table-striped mb-0">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">タイトル</th>
-                            <th scope="col">カテゴリ</th>
-                            <th scope="col" class="text-center">実施状況</th>
-                            <th scope="col" class="text-center">削除</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="todo in todosInList">
-                            <th scope="row">{{ todo.id }}</th>
-                            <td><span :class="{done: todo.isDone}">{{ todo.title }}</span></td>
-                            <td>{{ todo.category }}</td>
-                            <td class="text-center">
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" :id="'switch-isDone-' + todo.id"
-                                        v-model="todo.isDone">
-                                    <label class="custom-control-label" :for="'switch-isDone-' + todo.id"></label>
-                                </div>
-                            </td>
-                            <td class="text-center"><button type="button" class="btn btn-dark btn-sm"
-                                    @click="deleteTodos([todo.id])" :disabled="!todo.isDone">削除</button>
-                            </td>
-                        </tr>
-                        <tr class="table-light" style="border-top: solid 2px #ddd;">
-                            <td colspan="4">
-                                <nav>
-                                    <ul class="pagination my-0 py-0">
-                                        <li class="page-item">
-                                            <a @click.prevent="filter.previosPage" class="page-link"
-                                                aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                        <li class="page-item" v-for="i of filter.lastPage" :key="i">
-                                            <a @click.prevent="filter.selectPage(i)" class="page-link"
-                                                :class="{active: i === Number(filter.currentPage)}">{{ i }}</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a @click.prevent="filter.nextPage" class="page-link" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </td>
-                            <td class="text-center">
-                                <a href="" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-purge"
-                                    :class="purgeClassObject">一括削除</a>
-                            </td>
-                        </tr>
-                        <div class="modal fade" id="modal-purge">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h3 class=“modal-title”>一括削除</h3>
-                                        <button class="close" data-dismiss="modal">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                <div class="table-responsive">
+                    <table class="table table-striped mb-0 text-nowrap">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">タイトル</th>
+                                <th scope="col">カテゴリ</th>
+                                <th scope="col" class="text-center">実施状況</th>
+                                <th scope="col" class="text-center">削除</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="todo in todosInList">
+                                <th scope="row">{{ todo.id }}</th>
+                                <td><span :class="{done: todo.isDone}">{{ todo.title }}</span></td>
+                                <td>{{ todo.category }}</td>
+                                <td class="text-center">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input"
+                                            :id="'switch-isDone-' + todo.id" v-model="todo.isDone">
+                                        <label class="custom-control-label" :for="'switch-isDone-' + todo.id"></label>
                                     </div>
-                                    <div class="modal-body">
-                                        完了したすべてのToDoをまとめて削除します
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">キャンセル</button>
-                                        <button class="btn btn-danger" @click="purge" data-dismiss="modal">実行</button>
+                                </td>
+                                <td class="text-center"><button type="button" class="btn btn-dark btn-sm"
+                                        @click="deleteTodos([todo.id])" :disabled="!todo.isDone">削除</button>
+                                </td>
+                            </tr>
+                            <tr class="table-light" style="border-top: solid 2px #ddd;">
+                                <td colspan="4">
+                                    <nav>
+                                        <ul class="pagination my-0 py-0">
+                                            <li class="page-item">
+                                                <a @click.prevent="filter.previosPage" class="page-link"
+                                                    aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                            <li class="page-item" v-for="i of filter.lastPage" :key="i">
+                                                <a @click.prevent="filter.selectPage(i)" class="page-link"
+                                                    :class="{active: i === Number(filter.currentPage)}">{{ i }}</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a @click.prevent="filter.nextPage" class="page-link" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </td>
+                                <td class="text-center">
+                                    <a href="" class="btn btn-danger btn-sm" data-toggle="modal"
+                                        data-target="#modal-purge" :class="purgeClassObject">一括削除</a>
+                                </td>
+                            </tr>
+                            <div class="modal fade" id="modal-purge">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class=“modal-title”>一括削除</h3>
+                                            <button class="close" data-dismiss="modal">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            完了したすべてのToDoをまとめて削除します
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">キャンセル</button>
+                                            <button class="btn btn-danger" @click="purge"
+                                                data-dismiss="modal">実行</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <hr>
             <div class="py-3">

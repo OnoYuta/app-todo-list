@@ -79,7 +79,7 @@
             todos: [
                 {
                     id: 1,
-                    title: 'ゴミ捨て',
+                    title: '木曜ゴミ捨て',
                     category: '家事',
                     isDone: false,
                 }, {
@@ -90,87 +90,87 @@
                 }, {
                     id: 3,
                     title: '子供と公園に行く',
-                    category: '娯楽',
+                    category: '約束',
                     isDone: false,
                 },
                 {
                     id: 4,
-                    title: 'ゴミ捨て',
-                    category: '家事',
+                    title: 'Vue.jsの動画を見る',
+                    category: '研鑽',
                     isDone: false,
                 }, {
                     id: 5,
-                    title: '充電コードを買う',
+                    title: '自動開閉ゴミ箱をタイムセールで買う',
                     category: '買い物',
                     isDone: true,
                 }, {
                     id: 6,
-                    title: '子供と公園に行く',
-                    category: '娯楽',
+                    title: '下北沢でカレー食べる',
+                    category: '約束',
                     isDone: false,
                 },
                 {
                     id: 7,
-                    title: 'ゴミ捨て',
-                    category: '家事',
+                    title: '会社で渡された本を読む',
+                    category: '仕事',
                     isDone: false,
                 }, {
                     id: 8,
-                    title: '充電コードを買う',
-                    category: '買い物',
+                    title: '感想文を書く',
+                    category: '仕事',
                     isDone: true,
                 }, {
                     id: 9,
-                    title: '子供と公園に行く',
-                    category: '娯楽',
+                    title: '保育園のお知らせを読む',
+                    category: '家事',
                     isDone: false,
                 },
                 {
                     id: 10,
-                    title: 'ゴミ捨て',
-                    category: '家事',
+                    title: 'ToDoアプリを作る',
+                    category: '研鑽',
                     isDone: false,
                 }, {
                     id: 11,
-                    title: '充電コードを買う',
+                    title: 'マウスパッドを探す',
                     category: '買い物',
                     isDone: true,
                 }, {
                     id: 12,
-                    title: '子供と公園に行く',
-                    category: '娯楽',
+                    title: 'コートをクリーニングに出す',
+                    category: '家事',
                     isDone: false,
                 },
                 {
                     id: 13,
-                    title: 'ゴミ捨て',
+                    title: 'ダンボールゴミ捨て',
                     category: '家事',
                     isDone: false,
                 }, {
                     id: 14,
-                    title: '充電コードを買う',
-                    category: '買い物',
+                    title: '子供と運動公園に行く',
+                    category: '約束',
                     isDone: true,
                 }, {
                     id: 15,
-                    title: '子供と公園に行く',
-                    category: '娯楽',
+                    title: 'タピオカを飲む',
+                    category: '約束',
                     isDone: false,
                 },
                 {
                     id: 16,
-                    title: 'ゴミ捨て',
-                    category: '家事',
+                    title: 'プレゼン資料の作り方を読む',
+                    category: '研鑽',
                     isDone: false,
                 }, {
                     id: 17,
-                    title: '充電コードを買う',
-                    category: '買い物',
+                    title: 'Bootstrapで何か作る',
+                    category: '研鑽',
                     isDone: true,
                 }, {
                     id: 18,
-                    title: '子供と公園に行く',
-                    category: '娯楽',
+                    title: '鍋をきれいにする',
+                    category: '家事',
                     isDone: false,
                 },
             ],
@@ -201,7 +201,7 @@
                 },
             },
             alertDeleteHidden: true,
-            categories: ['家事', '買い物', '娯楽'],
+            categories: ['仕事', '買い物', '約束', '家事', '研鑽'],
             newTodoTitle: null,
             newTodoCategory: '未選択',
         },
@@ -374,12 +374,14 @@
             } else {
                 this.increment = this.todos.length;
                 this.updateTodoList();
+                this.todos[0].isDone = true;
             }
 
             if (localStorage.getItem('categories')) {
                 this.categories = JSON.parse(localStorage.getItem('categories'));
             }
 
+            console.log(this.todos);
             this.filter.currentPage = this.getParam('page') ? Number(this.getParam('page')) : 1;
             this.filter.searchTitle = this.getParam('title') ? this.getParam('title') : null;
             this.filter.searchCategory = this.getParam('category') ? Number(this.getParam('category')) : 0;
