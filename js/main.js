@@ -13,19 +13,19 @@
                 selectPage: function (index) {
                     if (index === this.currentPage) return;
                     this.currentPage = index;
-                    this.filterTodoList();
+                    this.submitAction();
                 },
                 previosPage: function () {
                     if (this.currentPage <= 1) return;
                     this.currentPage--;
-                    this.filterTodoList();
+                    this.submitAction();
                 },
                 nextPage: function () {
                     if (this.currentPage >= this.lastPage) return;
                     this.currentPage++;
-                    this.filterTodoList();
+                    this.submitAction();
                 },
-                filterTodoList: function () {
+                submitAction: function () {
                     this.currentPage === 1 ? $('#input-page').remove() : $('#input-page').val(this.currentPage);
                     if (Number(this.searchCategory) === 0) $('#input-category').remove();
                     if (this.searchTitle === null) $('#input-title').remove();
@@ -33,104 +33,144 @@
                 },
                 submitByKey: function (e) {
                     if (e.keyCode !== 13) return;
-                    this.filterTodoList();
+                    this.submitAction();
+                },
+                excute: function (todos) {
+                    if (this.searchTitle !== null && Number(this.searchCategory) !== 0) {
+                        return this.filterByTitleAndCategory(todos);
+                    }
+
+                    if (this.searchTitle !== null) {
+                        return this.filterByTitle(todos);
+                    }
+
+                    if (Number(this.searchCategory) !== 0) {
+                        return this.filterByCategory(todos);
+                    }
+
+                    return todos;
+                },
+                filterByTitle: function (todos) {
+                    if (this.searchTitle === null) return todos;
+
+                    return todos.filter(function (todo) {
+                        return todo.title.indexOf(this.title) > -1;
+                    }, { title: this.searchTitle });
+                },
+                filterByCategory: function (todos) {
+                    if (Number(this.searchCategory) === 0) return todos;
+
+                    return todos.filter(function (todo) {
+                        return todo.category === this.category;
+                    }, { category: vm.categories[Number(this.searchCategory) - 1] });
+                },
+                filterByTitleAndCategory: function (todos) {
+                    if (this.searchTitle === null || Number(this.searchCategory) === 0) return todos;
+
+                    return todos.filter(function (todo) {
+                        return todo.title.indexOf(this.title) > -1 && todo.category === this.category;
+                    }, { title: this.searchTitle, category: vm.categories[Number(this.searchCategory) - 1] });
+                },
+                updateCurrentPage: function (todos) {
+                    this.lastPage = Math.floor((todos.length - 1) / 10) + 1;
+                    if (this.currentPage > this.lastPage) this.currentPage = this.lastPage;
                 },
             },
             todos: [
                 {
                     id: 1,
                     title: 'ゴミ捨て',
-                    categoryId: '家事',
+                    category: '家事',
                     isDone: false,
                 }, {
                     id: 2,
                     title: '充電コードを買う',
-                    categoryId: '買い物',
+                    category: '買い物',
                     isDone: true,
                 }, {
                     id: 3,
                     title: '子供と公園に行く',
-                    categoryId: '娯楽',
+                    category: '娯楽',
                     isDone: false,
                 },
                 {
                     id: 4,
                     title: 'ゴミ捨て',
-                    categoryId: '家事',
+                    category: '家事',
                     isDone: false,
                 }, {
                     id: 5,
                     title: '充電コードを買う',
-                    categoryId: '買い物',
+                    category: '買い物',
                     isDone: true,
                 }, {
                     id: 6,
                     title: '子供と公園に行く',
-                    categoryId: '娯楽',
+                    category: '娯楽',
                     isDone: false,
                 },
                 {
                     id: 7,
                     title: 'ゴミ捨て',
-                    categoryId: '家事',
+                    category: '家事',
                     isDone: false,
                 }, {
                     id: 8,
                     title: '充電コードを買う',
-                    categoryId: '買い物',
+                    category: '買い物',
                     isDone: true,
                 }, {
                     id: 9,
                     title: '子供と公園に行く',
-                    categoryId: '娯楽',
+                    category: '娯楽',
                     isDone: false,
                 },
                 {
                     id: 10,
                     title: 'ゴミ捨て',
-                    categoryId: '家事',
+                    category: '家事',
                     isDone: false,
                 }, {
                     id: 11,
                     title: '充電コードを買う',
-                    categoryId: '買い物',
+                    category: '買い物',
                     isDone: true,
                 }, {
                     id: 12,
                     title: '子供と公園に行く',
-                    categoryId: '娯楽',
+                    category: '娯楽',
                     isDone: false,
                 },
                 {
                     id: 13,
                     title: 'ゴミ捨て',
-                    categoryId: '家事',
+                    category: '家事',
                     isDone: false,
                 }, {
                     id: 14,
                     title: '充電コードを買う',
-                    categoryId: '買い物',
+                    category: '買い物',
                     isDone: true,
                 }, {
                     id: 15,
                     title: '子供と公園に行く',
-                    categoryId: '娯楽',
+                    category: '娯楽',
                     isDone: false,
                 },
                 {
                     id: 16,
                     title: 'ゴミ捨て',
-                    categoryId: '家事',
+                    category: '家事',
                     isDone: false,
                 }, {
                     id: 17,
                     title: '充電コードを買う',
-                    categoryId: '買い物',
+                    category: '買い物',
                     isDone: true,
                 }, {
                     id: 18,
                     title: '子供と公園に行く',
-                    categoryId: '娯楽',
+                    category: '娯楽',
                     isDone: false,
                 },
             ],
@@ -174,7 +214,7 @@
                 this.todos.push({
                     id: ++this.increment,
                     title: this.newTodoTitle,
-                    categoryId: this.newTodoCategory,
+                    category: this.newTodoCategory,
                     isDone: false,
                 });
 
@@ -239,11 +279,11 @@
                 return true;
             },
             updateTodoList: function () {
-                this.filter.lastPage = Math.floor((this.todos.length - 1) / 10) + 1;
-                this.filter.currentPage = this.getParam('page') ? Number(this.getParam('page')) : 1;
+                let filteredTodos = this.filter.excute(this.todos);
+                this.filter.updateCurrentPage(filteredTodos);
                 let from = (this.filter.currentPage - 1) * 10;
-                let to = Math.min(this.todos.length, from + 10);
-                this.todosInList = this.todos.slice(from, to);
+                let to = Math.min(filteredTodos.length, from + 10);
+                this.todosInList = filteredTodos.slice(from, to);
             },
             deleteTodos: function (targetIdList) {
                 this.alertDeleteHidden = true;
