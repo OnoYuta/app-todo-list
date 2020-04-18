@@ -39,7 +39,7 @@
         <div class="container">
             <div class="py-3">
                 <h2 class="pb-2 mb-4" id="todo-list"><i class="fas fa-list"></i> ToDo一覧</h2>
-                <div class="alert alert-dismissible alert-success" role="alert" v-show="!alertDeleteHidden">
+                <div class="alert alert-dismissible alert-info" role="alert" v-show="!alertDeleteHidden">
                     <button type="button" class="close" data-dismiss="alert"
                         aria-label="Close"><span>&times;</span></button>
                     <strong>成功！</strong>
@@ -96,7 +96,10 @@
                                         @click="deleteTodos([todo.id])" :disabled="!todo.isDone">削除</button>
                                 </td>
                             </tr>
-                            <tr class="table-light" style="border-top: solid 2px #ddd;">
+                            <tr v-show="!todosInList.length" class="table-light">
+                                <td colspan="5">表示できるToDoは0件です。</td>
+                            </tr>
+                            <tr v-if="todosInList.length" class="table-light" style="border-top: solid 2px #ddd;">
                                 <td colspan="4">
                                     <nav>
                                         <ul class="pagination my-0 py-0">
@@ -123,6 +126,12 @@
                                         data-target="#modal-purge" :class="purgeClassObject">一括削除</a>
                                 </td>
                             </tr>
+                            <tr v-else class="table-light" style="border-top: solid 2px #ddd;">
+                                <td colspan="4">サンプルデータを復元するには右にある「リストア」ボタンをクリックしてください。</td>
+                                <td class="text-center">
+                                    <a href="" class="btn btn-info btn-sm" @click="restoreSampleTodos">リストア</a>
+                                </td>
+                            </tr>
                             <div class="modal fade" id="modal-purge">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -133,7 +142,9 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            完了したすべてのToDoをまとめて削除します
+                                            完了したすべてのToDoをまとめて削除します<br>
+                                            <span class="text-muted small"><i class="fas fa-exclamation-circle"></i>
+                                                現在表示されているToDoのみが一括削除の対象です</span>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
