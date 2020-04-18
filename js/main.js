@@ -25,17 +25,17 @@
             },
             todos: [
                 {
-                    id: '1',
+                    id: 1,
                     title: 'ゴミ捨て',
                     categoryId: '家事',
                     isDone: false,
                 }, {
-                    id: '2',
+                    id: 2,
                     title: '充電コードを買う',
                     categoryId: '買い物',
                     isDone: true,
                 }, {
-                    id: '3',
+                    id: 3,
                     title: '子供と公園に行く',
                     categoryId: '娯楽',
                     isDone: false,
@@ -165,6 +165,11 @@
                 if (!results[2]) return '';
 
                 return decodeURIComponent(results[2].replace(/\+/g, " "));
+            },
+            purge: function () {
+                $.each(this.doneTodosInList, function(index, todo){
+                    vm.deleteTodo(todo.id);
+                });
             }
         },
         computed: {
@@ -180,6 +185,11 @@
                     'alert-danger': this.createCategory.errors.length !== 0,
                 }
             },
+            purgeClassObject: function(){
+                return {
+                    'disabled': !this.doneTodosInList.length,
+                }
+            },
             isCreateTodoActive: function () {
                 let valid = this.addTodoRequestValid();
                 this.createAlert.isHidden = true;
@@ -192,6 +202,11 @@
                 this.createCategory.errors = [];
                 return valid;
             },
+            doneTodosInList: function () {
+                return this.todosInList.filter(function (todo) {
+                    return todo.isDone;
+                });
+            }
         },
         watch: {
             todos: {
@@ -220,6 +235,7 @@
                 this.increment = Math.max.apply(null, index);
             } else {
                 this.increment = this.todos.length;
+                this.updateTodoList();
             }
 
             if (localStorage.getItem('categories')) {
