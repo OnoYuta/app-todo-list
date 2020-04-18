@@ -39,6 +39,11 @@
         <div class="container">
             <div class="py-3">
                 <h2 class="pb-2 mb-4" id="todo-list"><i class="fas fa-list"></i> ToDo一覧</h2>
+                <div class="alert alert-dismissible alert-success" role="alert" v-show="!alertDeleteHidden">
+                    <button type="button" class="close"  data-dismiss="alert" aria-label="Close"><span>&times;</span></button>
+                    <strong>成功！</strong>
+                    <span> 完了したToDoを削除しました</span>
+                </div>
                 <form action="" method="GET" id="filter-todos-form">
                     <input id="input-page" type="hidden" name="page" v-model="filter.currentPage">
                     <div class="form-row align-items-end">

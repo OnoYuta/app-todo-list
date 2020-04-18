@@ -67,6 +67,7 @@
                     vm.createCategory.isHidden = true;
                 },
             },
+            alertDeleteHidden: true,
             categories: ['家事', '買い物', '娯楽'],
             newTodoTitle: null,
             newTodoCategory: '未選択',
@@ -152,9 +153,11 @@
                 this.todosInList = this.todos.slice(from, to);
             },
             deleteTodo: function (id) {
+                this.alertDeleteHidden = true;
                 this.todos = this.todos.filter(function (todo) {
                     return todo.id !== Number(this);
                 }, id);
+                this.alertDeleteHidden = false;
             },
             getParam: function (name) {
                 let url = window.location.href;
