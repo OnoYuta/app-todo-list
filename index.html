@@ -87,7 +87,7 @@
                                 </div>
                             </td>
                             <td class="text-center"><button type="button" class="btn btn-dark btn-sm"
-                                    @click="deleteTodo(todo.id)" :disabled="!todo.isDone">削除</button>
+                                    @click="deleteTodos([todo.id])" :disabled="!todo.isDone">削除</button>
                             </td>
                         </tr>
                         <tr class="table-light" style="border-top: solid 2px #ddd;">
