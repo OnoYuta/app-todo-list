@@ -39,7 +39,87 @@
                     title: '子供と公園に行く',
                     categoryId: '娯楽',
                     isDone: false,
-                }
+                },
+                {
+                    id: 4,
+                    title: 'ゴミ捨て',
+                    categoryId: '家事',
+                    isDone: false,
+                }, {
+                    id: 5,
+                    title: '充電コードを買う',
+                    categoryId: '買い物',
+                    isDone: true,
+                }, {
+                    id: 6,
+                    title: '子供と公園に行く',
+                    categoryId: '娯楽',
+                    isDone: false,
+                },
+                {
+                    id: 7,
+                    title: 'ゴミ捨て',
+                    categoryId: '家事',
+                    isDone: false,
+                }, {
+                    id: 8,
+                    title: '充電コードを買う',
+                    categoryId: '買い物',
+                    isDone: true,
+                }, {
+                    id: 9,
+                    title: '子供と公園に行く',
+                    categoryId: '娯楽',
+                    isDone: false,
+                },
+                {
+                    id: 10,
+                    title: 'ゴミ捨て',
+                    categoryId: '家事',
+                    isDone: false,
+                }, {
+                    id: 11,
+                    title: '充電コードを買う',
+                    categoryId: '買い物',
+                    isDone: true,
+                }, {
+                    id: 12,
+                    title: '子供と公園に行く',
+                    categoryId: '娯楽',
+                    isDone: false,
+                },
+                {
+                    id: 13,
+                    title: 'ゴミ捨て',
+                    categoryId: '家事',
+                    isDone: false,
+                }, {
+                    id: 14,
+                    title: '充電コードを買う',
+                    categoryId: '買い物',
+                    isDone: true,
+                }, {
+                    id: 15,
+                    title: '子供と公園に行く',
+                    categoryId: '娯楽',
+                    isDone: false,
+                },
+                {
+                    id: 16,
+                    title: 'ゴミ捨て',
+                    categoryId: '家事',
+                    isDone: false,
+                }, {
+                    id: 17,
+                    title: '充電コードを買う',
+                    categoryId: '買い物',
+                    isDone: true,
+                }, {
+                    id: 18,
+                    title: '子供と公園に行く',
+                    categoryId: '娯楽',
+                    isDone: false,
+                },
             ],
             createAlert: {
                 title: null,
@@ -152,11 +232,13 @@
                 let to = Math.min(this.todos.length, from + 10);
                 this.todosInList = this.todos.slice(from, to);
             },
-            deleteTodo: function (id) {
+            deleteTodos: function (targetIdList) {
                 this.alertDeleteHidden = true;
+
                 this.todos = this.todos.filter(function (todo) {
-                    return todo.id !== Number(this);
-                }, id);
+                    return $.inArray(todo.id, targetIdList) === -1;
+                }, targetIdList);
+
                 this.alertDeleteHidden = false;
             },
             getParam: function (name) {
@@ -170,9 +252,7 @@
                 return decodeURIComponent(results[2].replace(/\+/g, " "));
             },
             purge: function () {
-                $.each(this.doneTodosInList, function(index, todo){
-                    vm.deleteTodo(todo.id);
-                });
+                this.deleteTodos(this.doneTodosInList);
             }
         },
         computed: {
@@ -206,9 +286,11 @@
                 return valid;
             },
             doneTodosInList: function () {
-                return this.todosInList.filter(function (todo) {
-                    return todo.isDone;
-                });
+                let result = [];
+                for (let i = 0; i < this.todosInList.length;i++){
+                    if (this.todosInList[i].isDone) result.push(this.todosInList[i].id);
+                }
+                return result;
             }
         },
         watch: {
