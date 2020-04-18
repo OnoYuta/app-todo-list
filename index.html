@@ -96,6 +96,9 @@
                                         @click="deleteTodos([todo.id])" :disabled="!todo.isDone">削除</button>
                                 </td>
                             </tr>
+                            <tr v-show="!todosInList.length" class="table-light">
+                                <td colspan="5">条件に一致するToDoは0件です</td>
+                            </tr>
                             <tr class="table-light" style="border-top: solid 2px #ddd;">
                                 <td colspan="4">
                                     <nav>
