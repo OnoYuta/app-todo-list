@@ -373,15 +373,15 @@
                 this.increment = Math.max.apply(null, index);
             } else {
                 this.increment = this.todos.length;
-                this.updateTodoList();
                 this.todos[0].isDone = true;
             }
 
             if (localStorage.getItem('categories')) {
                 this.categories = JSON.parse(localStorage.getItem('categories'));
+            } else {
+                localStorage.setItem('categories', JSON.stringify(this.categories));
             }
 
-            console.log(this.todos);
             this.filter.currentPage = this.getParam('page') ? Number(this.getParam('page')) : 1;
             this.filter.searchTitle = this.getParam('title') ? this.getParam('title') : null;
             this.filter.searchCategory = this.getParam('category') ? Number(this.getParam('category')) : 0;
