@@ -9,20 +9,30 @@
                 currentPage: null,
                 lastPage: null,
                 searchTitle: null,
-                searchCategory: 0,
-                updateCurrentPage: function (index) {
-                    $('#input-page').val(index);
-                    $('#filter-todos-form').submit();
+                selectPage: function (index) {
+                    if (index === this.currentPage) return;
+                    this.currentPage = index;
+                    this.filterTodoList();
                 },
                 previosPage: function () {
-                    if (vm.filter.currentPage <= 1) return;
-                    $('#input-page').val(vm.filter.currentPage - 1);
-                    $('#filter-todos-form').submit();
+                    if (this.currentPage <= 1) return;
+                    this.currentPage--;
+                    this.filterTodoList();
                 },
                 nextPage: function () {
-                    if (vm.filter.currentPage >= vm.filter.lastPage) return;
-                    $('#input-page').val(vm.filter.currentPage + 1);
+                    if (this.currentPage >= this.lastPage) return;
+                    this.currentPage++;
+                    this.filterTodoList();
+                },
+                filterTodoList: function () {
+                    this.currentPage === 1 ? $('#input-page').remove() : $('#input-page').val(this.currentPage);
+                    if ((Number($('#input-category').val()) === 0)) $('#input-category').remove();
+                    if (this.searchTitle === null) $('#input-title').remove();
                     $('#filter-todos-form').submit();
+                },
+                submitByKey: function (e) {
+                    if (e.keyCode !== 13) return;
+                    this.filterTodoList();
                 },
             },
             todos: [
