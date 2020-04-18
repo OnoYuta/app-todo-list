@@ -40,7 +40,8 @@
             <div class="py-3">
                 <h2 class="pb-2 mb-4" id="todo-list"><i class="fas fa-list"></i> ToDo一覧</h2>
                 <div class="alert alert-dismissible alert-success" role="alert" v-show="!alertDeleteHidden">
-                    <button type="button" class="close"  data-dismiss="alert" aria-label="Close"><span>&times;</span></button>
+                    <button type="button" class="close" data-dismiss="alert"
+                        aria-label="Close"><span>&times;</span></button>
                     <strong>成功！</strong>
                     <span> 完了したToDoを削除しました</span>
                 </div>
@@ -53,13 +54,16 @@
                                     <button class="btn btn-info" type="submit"><i class="fas fa-search"></i></button>
                                 </div>
                                 <input type="text" id="inputSearch" class="form-control" placeholder="タイトルに含む文字"
-                                    aria-describedby="validationTooltipUsernamePrepend" required>
+                                    aria-describedby="validationTooltipUsernamePrepend" required name="title"
+                                    v-model="filter.searchTitle">
                             </div>
                         </div>
                         <div class="form-group offset-md-4 col-md-4">
-                            <select id="inputCategory" class="form-control">
-                                <option selected>すべてのカテゴリ</option>
-                                <option v-for="category in categories">{{ category }}</option>
+                            <select id="inputCategory" class="form-control" name="category"
+                                v-model="filter.searchCategory">
+                                <option value="0">すべてのカテゴリ</option>
+                                <option v-for="i of categories.length" :key="i" :value="i">{{ categories[i-1] }}
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -112,8 +116,8 @@
                                 </nav>
                             </td>
                             <td class="text-center">
-                                <a href="" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-purge" 
-                                :class="purgeClassObject">一括削除</a>
+                                <a href="" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-purge"
+                                    :class="purgeClassObject">一括削除</a>
                             </td>
                         </tr>
                         <div class="modal fade" id="modal-purge">

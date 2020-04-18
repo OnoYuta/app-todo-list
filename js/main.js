@@ -8,6 +8,8 @@
             filter: {
                 currentPage: null,
                 lastPage: null,
+                searchTitle: null,
+                searchCategory: 0,
                 updateCurrentPage: function (index) {
                     $('#input-page').val(index);
                     $('#filter-todos-form').submit();
@@ -268,7 +270,7 @@
                     'alert-danger': this.createCategory.errors.length !== 0,
                 }
             },
-            purgeClassObject: function(){
+            purgeClassObject: function () {
                 return {
                     'disabled': !this.doneTodosInList.length,
                 }
@@ -287,7 +289,7 @@
             },
             doneTodosInList: function () {
                 let result = [];
-                for (let i = 0; i < this.todosInList.length;i++){
+                for (let i = 0; i < this.todosInList.length; i++) {
                     if (this.todosInList[i].isDone) result.push(this.todosInList[i].id);
                 }
                 return result;
