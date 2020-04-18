@@ -9,6 +9,7 @@
                 currentPage: null,
                 lastPage: null,
                 searchTitle: null,
+                searchCategory: 0,
                 selectPage: function (index) {
                     if (index === this.currentPage) return;
                     this.currentPage = index;
@@ -26,7 +27,7 @@
                 },
                 filterTodoList: function () {
                     this.currentPage === 1 ? $('#input-page').remove() : $('#input-page').val(this.currentPage);
-                    if ((Number($('#input-category').val()) === 0)) $('#input-category').remove();
+                    if (Number(this.searchCategory) === 0) $('#input-category').remove();
                     if (this.searchTitle === null) $('#input-title').remove();
                     $('#filter-todos-form').submit();
                 },
@@ -340,6 +341,8 @@
             }
 
             this.filter.currentPage = this.getParam('page') ? Number(this.getParam('page')) : 1;
+            this.filter.searchTitle = this.getParam('title') ? this.getParam('title') : null;
+            this.filter.searchCategory = this.getParam('category') ? Number(this.getParam('category')) : 0;
         },
     });
 
