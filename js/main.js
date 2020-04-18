@@ -25,17 +25,17 @@
             },
             todos: [
                 {
-                    id: '1',
+                    id: 1,
                     title: 'ゴミ捨て',
                     categoryId: '家事',
                     isDone: false,
                 }, {
-                    id: '2',
+                    id: 2,
                     title: '充電コードを買う',
                     categoryId: '買い物',
                     isDone: true,
                 }, {
-                    id: '3',
+                    id: 3,
                     title: '子供と公園に行く',
                     categoryId: '娯楽',
                     isDone: false,
@@ -167,8 +167,8 @@
                 return decodeURIComponent(results[2].replace(/\+/g, " "));
             },
             purge: function () {
-                this.todos = this.todos.filter(function (todo) {
-                    return !todo.isDone;
+                $.each(this.doneTodosInList, function(index, todo){
+                    vm.deleteTodo(todo.id);
                 });
             }
         },
@@ -235,6 +235,7 @@
                 this.increment = Math.max.apply(null, index);
             } else {
                 this.increment = this.todos.length;
+                this.updateTodoList();
             }
 
             if (localStorage.getItem('categories')) {
