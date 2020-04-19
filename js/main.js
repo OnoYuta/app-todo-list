@@ -198,7 +198,7 @@
                     {
                         id: 4,
                         title: 'Vue.jsの動画を見る',
-                        category: '研鑽',
+                        category: '勉強',
                         isDone: false,
                     }, {
                         id: 5,
@@ -230,7 +230,7 @@
                     {
                         id: 10,
                         title: 'ToDoアプリを作る',
-                        category: '研鑽',
+                        category: '勉強',
                         isDone: false,
                     }, {
                         id: 11,
@@ -262,12 +262,12 @@
                     {
                         id: 16,
                         title: 'プレゼン資料の作り方を読む',
-                        category: '研鑽',
+                        category: '勉強',
                         isDone: false,
                     }, {
                         id: 17,
                         title: 'Bootstrapで何か作る',
-                        category: '研鑽',
+                        category: '勉強',
                         isDone: true,
                     }, {
                         id: 18,
@@ -276,7 +276,7 @@
                         isDone: false,
                     },
                 ];
-                this.categories = ['仕事', '買い物', '約束', '家事', '研鑽'];
+                this.categories = ['仕事', '買い物', '約束', '家事', '勉強'];
             }
         },
         computed: {
